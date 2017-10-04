@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/matiasvenditti/openalpr/src/openalpr/simpleini/ConvertUTF.c
+ConvertUTF.h
+/Users/matiasvenditti/openalpr/src/openalpr/simpleini/ConvertUTF.h
+stdio.h
+-
+
+/Users/matiasvenditti/openalpr/src/openalpr/simpleini/ConvertUTF.h
+

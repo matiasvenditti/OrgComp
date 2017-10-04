@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/JavaVM.framework/Headers/jni.h
+stdio.h
+-
+stdarg.h
+-
+jni_md.h
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/JavaVM.framework/Headers/jni_md.h
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/JavaVM.framework/Headers/jni_md.h
+
+/Users/matiasvenditti/openalpr/src/bindings/java/com_openalpr_jni_Alpr.h
+jni.h
+-
+
+/Users/matiasvenditti/openalpr/src/bindings/java/openalprjni.cpp
+alpr.h
+-
+com_openalpr_jni_Alpr.h
+/Users/matiasvenditti/openalpr/src/bindings/java/com_openalpr_jni_Alpr.h
+
+/usr/local/include/alpr.h
+iostream
+-
+vector
+-
+fstream
+-
+stdint.h
+-
+
