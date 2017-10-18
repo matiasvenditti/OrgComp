@@ -1,0 +1,97 @@
+.nav{
+	background-color: #281058;
+	width: 100%;
+	height: 60px;
+	text-align: center;
+	padding-top: 15px;
+	margin-bottom: 20px;
+}
+
+.nav-title{
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h2{
+	margin: 0px;
+}
+
+.title{
+	font-family: 'Open Sans', sans-serif;
+	margin-bottom: 10px;
+}
+
+.icon{
+	background-image: url("assets/camera.png");
+	background-repeat: no-repeat;
+}
+
+
+
+input{
+	width: 100%;
+	border-radius: 2px;
+	height: 25px;
+	font-family: 'Open Sans', sans-serif;
+	border: 1px solid #999999;
+	font-size: 15px;
+	text-transform: uppercase;
+}
+
+input[type=text]:focus{
+	border-color: #281058;
+	box-shadow: 0;
+	outline: none !important;
+}
+
+button{
+	height: 29px;
+	border: 1px solid;
+	border-radius: 2px;
+	width: 100%;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.btn{
+	background-color: #503190;
+	border-color: #503190;
+	color: white;
+}
+
+.tools{
+	margin-bottom: 40px;
+}
+
+.plate{
+	width: 100%;
+	border: solid 10px black;
+	border-radius: 20px;
+}
+
+
+.head{
+	width: 100%
+	height: 50px;
+	background-color: #063686;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.plate-title{
+	color: white;
+	text-align: center;
+	font-size: 1.5em;
+	font-family: 'Open Sans', sans-serif;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.plate-symbol{
+	text-align: center;
+	font-size: 10em;
+	font-family: 'Open Sans', sans-serif;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	font-weight: bold;
+}
