@@ -28,14 +28,14 @@ io.on('connection', function(socket){
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
-			check(licensePlate);
+			check(licensePlate, socket);
 			console.log(data);
 		});
 	})
 
 });
 
-function check(plate){
+function check(plate, socket){
 	let MongoClient = mongo.MongoClient;
 	MongoClient.connect(url, function(err, db){
 		if (err) throw err;
@@ -44,6 +44,7 @@ function check(plate){
 				if (err) throw err;
 				if (result[0] != null && result[0].Auth == true){
 					console.log('Plate ' + plate + ' successfully found');
+					socket.emit('plateValidated');
 				}
 				else{
 					console.log('Could not find plate ' + plate);
@@ -53,27 +54,6 @@ function check(plate){
 	})
 }
 
-// function exists(plate, function(req, res){
-//   let MongoClient = mongo.MongoClient;
-//   MongoClient.connect(url, function(err, db){
-//     if (err) throw err;
-//     else{
-//       db.collection('cars').find({'Plate': plate}, {'_id': 0}).toArray(function(err, result){
-//         if (err) throw err;
-//         if (result[0] != null && result[0].Auth == true){
-//           console.log(true);
-//           console.log(result[0]);
-//           console.log('Plate ' + plate + ' found successfully | ' + true);
-//         }
-//         else{
-//           console.log(false);
-//           res.send('Plate ' + plate + ' not found | ' + false);
-//         }
-//         db.close();
-//       });
-//     }
-//   });
-// });
 
 function identify (id, path) {
 	console.log (openalpr.IdentifyLicense (path, function (error, output) {
