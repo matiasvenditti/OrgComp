@@ -2,18 +2,19 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io-client');
-var socket = io.connect('http://localhost:3000', {reconnect: true});
+//var socket = io.connect('http://localhost:3000', {reconnect: true});
+var socket = io.connect('http://172.22.49.251:3000', {reconnect: true});
 var fs = require('fs');
 var nodewebcam = require('node-webcam');
-var imagePath = './images/autotest.jpg';
+var imagePath = 'test_picture.jpg';
 
 var opts = {
  
     //Picture related 
  
-    width: 1280,
+    width: 1080,
  
-    height: 720,
+    height: 720	,
  
     quality: 100,
  
@@ -56,10 +57,10 @@ var opts = {
 var webcam = nodewebcam.create( opts );
 
 
-
 socket.on('connect', function(socket){
 	console.log('Connection successful!');
 });
+
 
 setInterval(function(){
 	webcam.capture( "test_picture", function( err, data ) {} );
@@ -72,8 +73,11 @@ setInterval(function(){
 		console.log(content);
 		socket.emit('image', data);
 });
-}, 4000);
+}, 7000);
 
+socket.on('plateValidated', function(socket){
+	console.log('Patente encontrada!');
+});
 
 
 
