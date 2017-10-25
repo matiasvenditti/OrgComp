@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var server = app.listen(3000);
+var server = app.listen(4000);
 var fs = require('fs');
 var mongo = require('mongodb');
 var url = 'mongodb://localhost:27017/orgcomp';
@@ -24,7 +24,7 @@ io.on('connection', function(socket){
 		console.log('User disconnected: ' + socket.id);
 	});
 
-	socket.on('image', function(data){
+	socket.on('puerta_1_entrada', function(data){
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
@@ -44,9 +44,10 @@ function check(plate, socket){
 				if (err) throw err;
 				if (result[0] != null && result[0].Auth == true){
 					console.log('Plate ' + plate + ' successfully found');
-					socket.emit('plateValidated');
+					socket.emit('res_puerta_1_entrada', true);
 				}
 				else{
+					socket.emit('res_puerta_1_entrada', false);
 					console.log('Could not find plate ' + plate);
 				}
 			})
