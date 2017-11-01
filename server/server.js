@@ -6,6 +6,7 @@ var mongo = require('mongodb');
 var url = 'mongodb://localhost:27017/orgcomp';
 
 var licensePlate;
+var results;
 
 var socket = require('socket.io');
 var io = socket(server);
@@ -56,8 +57,9 @@ function check(plate, socket){
 
 function identify (id, path) {
 	console.log (openalpr.IdentifyLicense (path, function (error, output) {
-		var results = output.results;
-        licensePlate = (results.length > 0) ? results[0].plate : "No results";
+		results = output.results;
+		console.log(results);
+        licensePlate = results[0].plate;
 		console.log('Plate ' + licensePlate);
 	}));
 }
