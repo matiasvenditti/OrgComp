@@ -72,13 +72,13 @@ setInterval(function(){
 				throw err;
 			}
 			console.log(data);
-			socket.emit('puerta_1_entrada', data);
+			socket.emit('plate', data);
 			waitingRes = true;		
 		});
 	}
 }, 7000);
 
-socket.on('res_puerta_1_entrada', function(res){
+socket.on('open', function(res){
 	waitingRes = false;
 	if(res) openDoor();
 });

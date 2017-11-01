@@ -19,17 +19,19 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 	console.log('User connected successfully ' + socket.id);
+	socket.emit('Connection', true);
 
 	socket.on('disconnect', function(){
 		console.log('User disconnected: ' + socket.id);
+		socket.emit('Connection', false);
 	});
 
-	socket.on('puerta_1_entrada', function(data){
+	socket.on('plate', function(data)
+		console.log(data);
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
 			check(licensePlate, socket);
-			console.log(data);
 		});
 	})
 
@@ -44,22 +46,21 @@ function check(plate, socket){
 				if (err) throw err;
 				if (result[0] != null && result[0].Auth == true){
 					console.log('Plate ' + plate + ' successfully found');
-					socket.emit('res_puerta_1_entrada', true);
+					socket.emit('open', true);
 				}
 				else{
-					socket.emit('res_puerta_1_entrada', false);
 					console.log('Could not find plate ' + plate);
+					socket.emit('open', false);
 				}
 			})
 		}
 	})
 }
 
-
 function identify (id, path) {
 	console.log (openalpr.IdentifyLicense (path, function (error, output) {
 		var results = output.results;
         licensePlate = (results.length > 0) ? results[0].plate : "No results";
-				console.log('Plate ' + licensePlate);
+		console.log('Plate ' + licensePlate);
 	}));
 }
