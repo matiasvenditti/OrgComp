@@ -39,19 +39,17 @@ io.on('connection', function(socket){
 function check(plate, socket){
 	let MongoClient = mongo.MongoClient;
 	MongoClient.connect(url, function(err, db){
-		if (err) throw err;
-		else{
-			db.collection('cars').find({'Plate': plate}, {'_id': 0}).toArray(function(err, result){
-				if (err) throw err;
-				if (result[0] != null && result[0].Auth == true){
+		if (err) {
+			throw err;
+		}else{
+			let myDocument = db.collection('cars').findOne({'Plate': plate}, {'_id': 0});
+				if (myDocument != null && myDocument.Auth == true){
 					console.log('Plate ' + plate + ' successfully found');
 					socket.emit('open', true);
-				}
-				else{
+				} else{
 					console.log('Could not find plate ' + plate);
 					socket.emit('open', false);
 				}
-			})
 		}
 	})
 }
