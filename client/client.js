@@ -56,15 +56,14 @@ var opts = {
 
 var webcam = nodewebcam.create( opts );
 var waitingRes = false;
-var openDoor2 = false;
+var isDoorOpen = false;
 
-socket.on('connect', function(socket){
-	console.log('Connection successful!');
+socket.on('Connection', function(data){
+	if(data) ? console.log('Connection successful!') : console.log('Disconnect!')
 });
 
-
 setInterval(function(){
-	if(!waitingRes && !openDoor2){
+	if(!waitingRes && !isDoorOpen){
 		webcam.capture( "test_picture", function( err, data ) {} );
 		
 		fs.readFile(imagePath, function read(err, data){
@@ -85,7 +84,7 @@ socket.on('open', function(res){
 
 function openDoor(){
 	console.log("Abriendo la barrera");
-	openDoor2 = true;
+	isDoorOpen = true;
 	setTimeout(function(){
 		closeDoor();
 	}, 10000);
@@ -93,5 +92,5 @@ function openDoor(){
 
 function closeDoor(){
 	console.log("Cerrando la barrera");
-	openDoor2 = false;
+	isDoorOpen = false;
 }

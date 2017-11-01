@@ -6,6 +6,7 @@ var mongo = require('mongodb');
 var url = 'mongodb://localhost:27017/orgcomp';
 
 var licensePlate;
+var results;
 
 var socket = require('socket.io');
 var io = socket(server);
@@ -26,7 +27,12 @@ io.on('connection', function(socket){
 		socket.emit('Connection', false);
 	});
 
+<<<<<<< HEAD
 	socket.on('plate', function(data){
+=======
+	socket.on('plate', function(data){ 
+		console.log(data);
+>>>>>>> b02b1d1a837e049a582eb78c9259cda3b3a511de
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
@@ -39,27 +45,26 @@ io.on('connection', function(socket){
 function check(plate, socket){
 	let MongoClient = mongo.MongoClient;
 	MongoClient.connect(url, function(err, db){
-		if (err) throw err;
-		else{
-			db.collection('cars').find({'Plate': plate}, {'_id': 0}).toArray(function(err, result){
-				if (err) throw err;
-				if (result[0] != null && result[0].Auth == true){
+		if (err) {
+			throw err;
+		}else{
+			let myDocument = db.collection('cars').findOne({'Plate': plate}, {'_id': 0});
+				if (myDocument != null && myDocument.Auth == true){
 					console.log('Plate ' + plate + ' successfully found');
 					socket.emit('open', true);
-				}
-				else{
+				} else{
 					console.log('Could not find plate ' + plate);
 					socket.emit('open', false);
 				}
-			})
 		}
 	})
 }
 
 function identify (id, path) {
 	console.log (openalpr.IdentifyLicense (path, function (error, output) {
-		var results = output.results;
-        licensePlate = (results.length > 0) ? results[0].plate : "No results";
+		results = output.results;
+		console.log(results);
+        licensePlate = results[0].plate;
 		console.log('Plate ' + licensePlate);
 	}));
 }
