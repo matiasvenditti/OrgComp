@@ -27,12 +27,8 @@ io.on('connection', function(socket){
 		socket.emit('Connection', false);
 	});
 
-<<<<<<< HEAD
-	socket.on('plate', function(data){
-=======
 	socket.on('plate', function(data){ 
 		console.log(data);
->>>>>>> b02b1d1a837e049a582eb78c9259cda3b3a511de
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
@@ -64,7 +60,9 @@ function identify (id, path) {
 	console.log (openalpr.IdentifyLicense (path, function (error, output) {
 		results = output.results;
 		console.log(results);
-        licensePlate = results[0].plate;
+		if(results.length) {
+			licensePlate = results[0].plate;
+		}
 		console.log('Plate ' + licensePlate);
 	}));
 }
