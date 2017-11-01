@@ -26,15 +26,14 @@ io.on('connection', function(socket){
 		socket.emit('Connection', false);
 	});
 
-	socket.on('plate', function(data)
-		console.log(data);
+	socket.on('plate', function(data){
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
 			check(licensePlate, socket);
+			console.log(data);
 		});
-	})
-
+	});
 });
 
 function check(plate, socket){
