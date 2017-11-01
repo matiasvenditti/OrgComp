@@ -59,7 +59,7 @@ var waitingRes = false;
 var isDoorOpen = false;
 
 socket.on('Connection', function(data){
-	if(data) ? console.log('Connection successful!') : console.log('Disconnect!')
+	data ? console.log('Connection successful!') : console.log('Disconnect!')
 });
 
 setInterval(function(){
@@ -79,6 +79,7 @@ setInterval(function(){
 
 socket.on('open', function(res){
 	waitingRes = false;
+	console.log(res);
 	if(res) openDoor();
 });
 
