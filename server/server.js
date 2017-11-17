@@ -33,6 +33,7 @@ io.on('connection', function(socket){
 			if (err) throw err;
 			identify(1, './images/test.jpg')
 			check(licensePlate, socket);
+			console.log(data);
 		});
 	});
 });
@@ -59,7 +60,9 @@ function identify (id, path) {
 	console.log (openalpr.IdentifyLicense (path, function (error, output) {
 		results = output.results;
 		console.log(results);
-        licensePlate = results[0].plate;
+		if(results.length) {
+			licensePlate = results[0].plate;
+		}
 		console.log('Plate ' + licensePlate);
 	}));
 }
