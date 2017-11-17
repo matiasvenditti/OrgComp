@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io-client');
 //var socket = io.connect('http://localhost:3000', {reconnect: true});
-var socket = io.connect('http://172.22.40.29:4000', {reconnect: true});
+var socket = io.connect('http://192.168.1.178:4000', {reconnect: true});
 var fs = require('fs');
 var nodewebcam = require('node-webcam');
 var imagePath = 'test_picture.jpg';
@@ -64,15 +64,16 @@ socket.on('Connection', function(data){
 
 setInterval(function(){
 	if(!waitingRes && !isDoorOpen){
-		webcam.capture( "test_picture", function( err, data ) {} );
-		
-		fs.readFile(imagePath, function read(err, data){
-			if (err){
-				throw err;
-			}
-			console.log(data);
-			socket.emit('plate', data);
-			waitingRes = true;		
+		webcam.capture( "test_picture", function( err, data ) {
+			fs.readFile(imagePath, function read(err, data){
+				if (err){
+					throw err;
+				}
+				console.log(data);
+				socket.emit('plate', data);
+				waitingRes = true;		
+			});
+
 		});
 	}
 }, 7000);
