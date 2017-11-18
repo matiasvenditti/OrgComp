@@ -1,16 +1,44 @@
-var socket;
+var socket = io.connect('http://localhost:9000', { 'forceNew': true });
 
 function addPlate(){
   var text = getText("addPlateText");
-  socket.emit('add', text);
+  if(verifyPlate(text)){
+  	console.log('Patente verificada');
+  	socket.emit('add', text);
+  	document.getElementById('addPlateText').value = '';
+  	document.getElementById('addSucces').style.display = 'block';
+  	setTimeout(function(){ 
+  		document.getElementById('addSucces').style.display = 'none';
+  	 }, 4000);
+  }else{
+  	document.getElementById('addDanger').style.display = 'block';
+  	setTimeout(function(){ 
+  		document.getElementById('addDanger').style.display = 'none';
+  	 }, 4000);
+  }
 }
 
 function findPlate(){
   var text = getText("findPlateText");
-  socket.emit('find', text);
+  if(verifyPlate(text)){
+  	socket.emit('find', text);
+  	document.getElementById('findPlateText').value = '';
+  	socket.on('findRes', function(data){
+  		
+  	});
+  }
 }
 
 function getText(id){
-  socket = io();
   return document.getElementById(id).value.toUpperCase();
+}
+
+function verifyPlate(plate){
+	if(plate.length == 6){
+		console.log("Entro Vieja");
+		return /[A-Z]{3}[0-9]{3}/.test(plate);
+	}else if(plate.length == 7){
+		console.log("Entro Nueva");
+		return /[A-Z]{2}[0-9]{3}[A-Z]{2}/.test(plate);
+	}else return false;
 }

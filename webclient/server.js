@@ -3,7 +3,7 @@ var app = express();
 var mongo = require('mongodb');
 var url = 'mongodb://localhost:27017/orgcomp';
 
-var server = app.listen(3000);
+var server = app.listen(9000);
 
 var io = require('socket.io')(server);
 

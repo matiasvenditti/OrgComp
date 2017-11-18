@@ -1,22 +1,16 @@
 var express = require('express');
 var app = express();
-var server = app.listen(4000);
+var server = app.listen(3000);
 var fs = require('fs');
 var mongo = require('mongodb');
 var url = 'mongodb://localhost:27017/orgcomp';
-
 var licensePlate;
 var results;
-
 var socket = require('socket.io');
 var io = socket(server);
 
 var openalpr = require("node-openalpr");
 openalpr.Start();
-
-app.get('/', function(req, res){
-	res.send('Hello World!');
-});
 
 io.on('connection', function(socket){
 	console.log('User connected successfully ' + socket.id);
@@ -27,16 +21,14 @@ io.on('connection', function(socket){
 		socket.emit('Connection', false);
 	});
 
+	setTimeout(function(){
+		socket.emit('WebClientPlate', 'IEB625');
+	}, 5000);
 
 	socket.on('plate', function(data){
-
 		fs.writeFile('./images/test' + '.jpg', data, function(err){
 			if (err) throw err;
-			console.log('---------empieza----------');
 			identify(1, './images/test.jpg', check, socket);
-			// console.log("Termina indetify: "+licensePlate);
-			// check(licensePlate, socket);
-			console.log('---------Termina----------');
 		});
 	});
 });
@@ -53,6 +45,7 @@ function check(plate, socket){
 				if (result.length && result[0].Plate != undefined && result[0].Autho){
 					console.log('Plate ' + plate + ' successfully found');
 					socket.emit('open', true);
+					socket.emit('WebClientPlate', licensePlate);
 					console.log("True");
 				} else{
 					console.log('Could not find plate ' + plate);

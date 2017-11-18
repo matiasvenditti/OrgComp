@@ -7,13 +7,9 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
 	</head>
 	<body style="margin: 0px">
-    <script src="sketch.js"></script>
 		<div class="row nav">
-			<div class="col-md-3 col-md-offset-4">
+			<div class="col-md-4 col-md-offset-4">
 				<h2 class="nav-title">Recognition plate system</h2>
-			</div>
-			<div class="col-md-1">
-				<svg class="icon"></svg>
 			</div>
 		</div>
 		<div class="container">
@@ -37,7 +33,7 @@
 					<div class="col-xs-12 col-md-5">
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="title">Buscar Patente</h2>
+								<h2 class="title">Eliminar Patente</h2>
 							</div>
 						</div>
 						<div class="row">
@@ -52,13 +48,33 @@
 				</div>
 			</div>
 
+			<div class="row">
+				<div  class="col-md-5 col-md-offset-1" >
+					<div id="addDanger" class="alert alert-danger" style="display: none;">Error: La patente ingresada no es correcta</div>
+					<div id="addSucces" class="alert alert-succes"  style="display: none;">La patente se guardó correctamente!</div>
+				</div>
+				<div  class="col-md-5" >
+					<div id="addDanger" class="alert alert-danger" style="display: none;">Error: La patente ingresada no es correcta o no existe</div>
+					<div id="addSucces" class="alert alert-succes"  style="display: none;">La patente se eliminó correctamente!</div>
+				</div>
+			</div>
+			<div class="row">
+				<h1 class="col-md-offset-1 title">Entrada principal</h1>
+			</div>
+			<div class="row">
+				<h4 id="time" class="col-md-offset-1 time"></h1>
+			</div>
+
 			<div class="plate-icon">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<div class="plate">
 							<div class="head">
 								<div class="row">
-									<div class="col-md-2"></div>
+									<div class="col-md-2">
+										<!-- <div class="escudo"></div> -->
+										<img class="escudo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Coat_of_arms_of_Argentina.svg/200px-Coat_of_arms_of_Argentina.svg.png">
+									</div>
 									<div class="col-md-8">
 										<p class="plate-title">Republica Argentina</p>
 									</div>
@@ -67,14 +83,11 @@
 							</div>
 							<div class="number">
 								<div class="row">
-									<div class="col-md-2 col-md-offset-1">
-										<p class="plate-symbol">AB</p>
+									<div class="col-md-6">
+										<h1 id="plate-words" class="symbol"></h1>
 									</div>
-									<div class="col-md-4 col-md-offset-1">
-										<p class="plate-symbol">123</p>
-									</div>
-									<div class="col-md-2 col-md-offset-1">
-										<p class="plate-symbol">AA</p>
+									<div class="col-md-6">
+										<h1 id="plate-numbers" class="symbol"></h1>
 									</div>
 								</div>
 							</div>
@@ -87,6 +100,25 @@
 
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+		<script src="sketch.js"></script>
+		<script>
+
+    		var socket2 = io.connect('http://localhost:3000', { 'forceNew': true });
+		    socket2.on('WebClientPlate', function (data) {
+		      let date = new Date(); 
+		      console.log(data);
+		      document.getElementById('time').innerHTML = 'Ultimo ingreso: '+date.getDate()+'/'+date.getMonth()+ ' - '+date.getHours()+':'+date.getMinutes();
+		      render(data);
+		    });
+
+		    function render(plate){
+		     var words = plate.substring(0, 3).toUpperCase();
+		      var numbers = plate.substring(3, 6);
+		      document.getElementById("plate-words").innerHTML = words;
+		      document.getElementById("plate-numbers").innerHTML = numbers;
+		      
+		    }
+  		</script>
 	</body>
 
 </html>
