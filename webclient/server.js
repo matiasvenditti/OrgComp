@@ -18,8 +18,9 @@ io.on('connection', function(socket){
     addPlate(plate);
     console.log('Plate added: ' + plate);
   });
-  socket.on('find', function(plate){
-    findPlate(plate);
+  socket.on('delete', function(plate){
+    removePlate(plate);
+    console.log('Plate ' + plate + ' succesfully removed');
   })
 })
 
@@ -52,4 +53,17 @@ function findPlate(plate){
       });
     }
   });
+}
+
+function removePlate(plate){
+  let MongoClient = mongo.MongoClient;
+  MongoClient.connect(url, function(err, db){
+    if (err) throw err;
+    let query = {'Plate': plate};
+    db.collection('cars').remove(query, function(err, obj){
+      if (err) throw err;
+      console.log(obj.result.n + ' plate(s) removed');
+      db.close();
+    })
+  })
 }

@@ -7,14 +7,31 @@ function addPlate(){
   	socket.emit('add', text);
   	document.getElementById('addPlateText').value = '';
   	document.getElementById('addSucces').style.display = 'block';
-  	setTimeout(function(){ 
+  	setTimeout(function(){
   		document.getElementById('addSucces').style.display = 'none';
   	 }, 4000);
   }else{
   	document.getElementById('addDanger').style.display = 'block';
-  	setTimeout(function(){ 
+  	setTimeout(function(){
   		document.getElementById('addDanger').style.display = 'none';
   	 }, 4000);
+  }
+}
+
+function removePlate(){
+  var text = getText("removePlateText");
+  if (verifyPlate(text)){
+    socket.emit('delete', text);
+    document.getElementById("removePlateText").value = '';
+    document.getElementById("removeSucces").style.display = 'block';
+    setTimeout(function(){
+      document.getElementById("removeSucces").style.display = 'none';
+    }, 4000);
+  } else{
+    document.getElementById("removeDanger").style.display = 'block';
+    setTimeout(function(){
+      document.getElementById("removeDanger").style.display = 'none';
+    }, 4000);
   }
 }
 
@@ -24,7 +41,7 @@ function findPlate(){
   	socket.emit('find', text);
   	document.getElementById('findPlateText').value = '';
   	socket.on('findRes', function(data){
-  		
+
   	});
   }
 }

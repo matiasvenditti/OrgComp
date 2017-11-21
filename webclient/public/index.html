@@ -38,10 +38,10 @@
 						</div>
 						<div class="row">
 								<div class="col-md-8">
-									<input type="text" name="search-plate">
+									<input type="text" name="search-plate" id="removePlateText">
 								</div>
 								<div class="col-md-4">
-									<button id="findPlateText" class="btn" maxlength="7" minlength="6" required type="submit">Buscar</button>
+									<button class="btn" maxlength="7" minlength="6" required type="submit" onclick="removePlate()">Eliminar</button>
 								</div>
 						</div>
 					</div>
@@ -54,8 +54,8 @@
 					<div id="addSucces" class="alert alert-succes"  style="display: none;">La patente se guardó correctamente!</div>
 				</div>
 				<div  class="col-md-5" >
-					<div id="addDanger" class="alert alert-danger" style="display: none;">Error: La patente ingresada no es correcta o no existe</div>
-					<div id="addSucces" class="alert alert-succes"  style="display: none;">La patente se eliminó correctamente!</div>
+					<div id="removeDanger" class="alert alert-danger" style="display: none;">Error: La patente ingresada no es correcta o no existe</div>
+					<div id="removeSucces" class="alert alert-succes"  style="display: none;">La patente se eliminó correctamente!</div>
 				</div>
 			</div>
 			<div class="row">
@@ -105,7 +105,7 @@
 
     		var socket2 = io.connect('http://localhost:3000', { 'forceNew': true });
 		    socket2.on('WebClientPlate', function (data) {
-		      let date = new Date(); 
+		      let date = new Date();
 		      console.log(data);
 		      document.getElementById('time').innerHTML = 'Ultimo ingreso: '+date.getDate()+'/'+date.getMonth()+ ' - '+date.getHours()+':'+date.getMinutes();
 		      render(data);
@@ -116,7 +116,7 @@
 		      var numbers = plate.substring(3, 6);
 		      document.getElementById("plate-words").innerHTML = words;
 		      document.getElementById("plate-numbers").innerHTML = numbers;
-		      
+
 		    }
   		</script>
 	</body>
